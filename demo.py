@@ -14,7 +14,8 @@ class Player(object):
         raise NotImplementedError()
 
 
-class Player1(Player):
+
+class Player1(Player):    
     def __init__(self, board):
         self.__current_board = board
 
@@ -22,7 +23,14 @@ class Player1(Player):
         return self.__current_board
 
     def make_move(self, move):
-        pass
+        if self.__current_board.turn == True:
+            try:
+                self.__current_board.push_san(move)
+            except ValueError:
+                print('Not a legal move')
+        else:
+            print("Error: ****It's Blacks Turn (Player2)***")
+        return self.get_board()
 
 class Player2(Player):
     def __init__(self, board):
@@ -33,11 +41,15 @@ class Player2(Player):
 
 
     def make_move(self, move):
-        pass
+        if self.__current_board.turn = False:
+            try:
+                self.__current_board.push_san(move)
+            except ValueError:
+                print('Not a legal move')
+        else:
+            print("Error: ****It's White's Turn (Player1)***")
 
-
-
-
+        return self.__current_board
 
 if __name__ == "__main__":
     start_demo()
