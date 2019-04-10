@@ -30,6 +30,11 @@ class Player1(Player):
             print("Error: ****It's Blacks Turn (Player2)***")
         return self.get_board()
 
+    def undo_last_move(self):
+        self.__current_board.pop()
+        return self.__current_board
+
+
 class Player2(Player):
     def __init__(self, board):
         self.__current_board = board
@@ -49,13 +54,15 @@ class Player2(Player):
 
         return self.__current_board
 
+    def undo_last_move(self):
+        self.__current_board.pop()
+        return self.__current_board
 
 def start_demo():
     global board
     board = chess.Board()
     p1 = Player1(board)
     p2 = Player2(board)
-
     print(board)
     print("------------------------------------------")
 
