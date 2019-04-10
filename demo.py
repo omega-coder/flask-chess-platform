@@ -58,7 +58,7 @@ class Player2(Player):
         self.__current_board.pop()
         return self.__current_board
 
-def start_demo():
+def console_demo():
     global board
     board = chess.Board()
     p1 = Player1(board)
@@ -76,6 +76,11 @@ def start_demo():
         print(board)
         print("-"*50)
 
+
+
+
+
 if __name__ == "__main__":
-    start_demo()
+    #console_demo()
+
 
