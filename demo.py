@@ -69,9 +69,6 @@ def start_demo():
         print(board)
         print("-"*50)
 
-
-
-
 if __name__ == "__main__":
     start_demo()
 
