@@ -18,10 +18,13 @@ class Player(object):
 
 
 class Player1(Player):
-    pass
+    def __init__(self, board):
+        self.board = board
 
 class Player2(Player):
-   pass
+    def __init__(self, board):
+        self.board = board
+
 
 
 if __name__ == "__main__":
