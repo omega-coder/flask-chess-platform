@@ -15,7 +15,7 @@ class Player(object):
 
 
 
-class Player1(Player):    
+class Player1(Player):
     def __init__(self, board):
         self.__current_board = board
 
@@ -50,6 +50,12 @@ class Player2(Player):
             print("Error: ****It's White's Turn (Player1)***")
 
         return self.__current_board
+
+
+def start_demo():
+    pass
+
+
 
 if __name__ == "__main__":
     start_demo()
