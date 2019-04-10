@@ -21,6 +21,8 @@ class Player1(Player):
     def get_board(self):
         return self.__current_board
 
+    def make_move(self, move):
+        pass
 
 class Player2(Player):
     def __init__(self, board):
@@ -28,6 +30,11 @@ class Player2(Player):
 
     def get_board(self):
         return self.__current_board
+
+
+    def make_move(self, move):
+        pass
+
 
 
 
