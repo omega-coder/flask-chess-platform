@@ -13,8 +13,6 @@ class Player(object):
     def make_move(self, move):
         raise NotImplementedError()
 
-
-
 class Player1(Player):
     def __init__(self, board):
         self.__current_board = board
@@ -41,7 +39,7 @@ class Player2(Player):
 
 
     def make_move(self, move):
-        if self.__current_board.turn = False:
+        if self.__current_board.turn == False:
             try:
                 self.__current_board.push_san(move)
             except ValueError:
@@ -53,7 +51,24 @@ class Player2(Player):
 
 
 def start_demo():
-    pass
+    global board
+    board = chess.Board()
+    p1 = Player1(board)
+    p2 = Player2(board)
+
+    print(board)
+    print("------------------------------------------")
+
+    while True:
+        move_san = input('White move: ').strip()
+        board = p1.make_move(move_san)
+        print(board)
+        print('-'*50)
+        move_san = input('Black to move: ').strip()
+        board = p2.make_move(move_san)
+        print(board)
+        print("-"*50)
+
 
 
 
