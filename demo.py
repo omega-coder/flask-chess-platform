@@ -6,12 +6,9 @@
 from flask import Flask, Response, request
 import chess, chess.pgn
 
-
-
-
 class Player(object):
     def __init__(self, board):
-        self.current_board = board
+        self.__current_board = board
 
     def make_move(self, move):
         raise NotImplementedError()
@@ -19,11 +16,19 @@ class Player(object):
 
 class Player1(Player):
     def __init__(self, board):
-        self.board = board
+        self.__current_board = board
+
+    def get_board(self):
+        return self.__current_board
+
 
 class Player2(Player):
     def __init__(self, board):
-        self.board = board
+        self.__current_board = board
+
+    def get_board(self):
+        return self.__current_board
+
 
 
 
