@@ -5,6 +5,7 @@
 
 from flask import Flask, Response, request
 import chess, chess.pgn
+import traceback
 
 class Player(object):
     def __init__(self, board):
@@ -84,11 +85,39 @@ def run_game():
     Human2 = Player2(board)
 
     app = Flask(__name__, static_url_path='')
-    @app.route('/')
+    @app.route('/', methods=['GET'])
     def index():
         global board
         ret_page = open('index.html').read()
         return ret_page.replace('start', board.board_fen()).replace('pgn-here', board.fen())
+
+
+    @app.route('/move', methods=['GET'])
+    def move():
+        global board
+        if not board.is_game_over():
+            move_san = request.args.get('move', default="")
+            if move_san is not None and move != '':
+                try:
+                    board = Human.make_move(move)
+                except Exception:
+                    traceback.print_exc()
+                response = app.response_class(
+                    response=board.board_fen(),
+                    status=200
+                )
+                return response
+            else:
+                response = app.response_class(
+                    response="game over",
+                    status=200
+                )
+                return response
+            return index()
+
+
+
+
 
     app.run(host='0.0.0.0', debug=True)
 
