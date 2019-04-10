@@ -83,7 +83,7 @@ def run_game():
     Human  = Player1(board)
     Human2 = Player2(board)
 
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='')
     @app.route('/')
     def index():
         global board
