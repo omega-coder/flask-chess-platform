@@ -77,6 +77,10 @@ def console_demo():
         print("-"*50)
 
 
+def run_game():
+    global board
+
+
 
 
 
