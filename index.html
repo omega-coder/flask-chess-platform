@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="static/chessboard.min.css">
     <!-- Javascript files -->
     <script src="static/jquery.min.js"></script>
+    <script src="static/chess.min.js"></script>
     <script src="static/chessboard.min.js"></script>  
 </head>
 <body>
-    <div id="board" style='width: 400px;'>
-        
-    </div>
+    <div id="board" style='width: 400px;'></div>
 
+    <p id="pgn">pgn-here</p>
 
     <script type='text/javascript'>
+    var board, game = 
+
     var board = ChessBoard('board', {
-        position: 'on_remplace_par_la_notation_fen_ici',
+        position: 'start',
         draggable: true,
         onDrop: onDrop
     });
