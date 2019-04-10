@@ -79,12 +79,21 @@ def console_demo():
 
 def run_game():
     global board
+    board = chess.Board()
+    Human  = Player1(board)
+    Human2 = Player2(board)
 
+    app = Flask(__name__)
+    @app.route('/')
+    def index():
+        global board
+        ret_page = open('index.html').read()
+        return ret_page.replace('start', board.board_fen()).replace('pgn-here', board.fen())
 
-
-
+    app.run(host='0.0.0.0', debug=True)
 
 if __name__ == "__main__":
     #console_demo()
+    run_game()
 
 
