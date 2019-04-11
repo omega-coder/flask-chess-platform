@@ -97,9 +97,10 @@ def run_game():
         global board
         if not board.is_game_over():
             move_san = request.args.get('move', default="")
-            if move_san is not None and move != '':
+            if move_san is not None and move_san != '':
                 try:
-                    board = Human.make_move(move)
+                    board = Human.make_move(str(move_san))
+                    print(board)
                 except Exception:
                     traceback.print_exc()
                 response = app.response_class(
@@ -114,10 +115,6 @@ def run_game():
                 )
                 return response
             return index()
-
-
-
-
 
     app.run(host='0.0.0.0', debug=True)
 
