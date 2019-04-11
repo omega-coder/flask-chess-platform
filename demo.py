@@ -8,6 +8,8 @@ import chess, chess.pgn
 import traceback
 import time
 
+
+
 class Player(object):
     def __init__(self, board, game_time=300):
         self.__current_board = board
@@ -26,7 +28,7 @@ class Player1(Player):
         return self.__current_board
 
     def make_move(self, move):
-        if self.__current_board.turn == chess.WHITE:
+        if self.__current_board.turn == True:
             if self.__first_move_timestamp is not None:
                 try:
                     self.__current_board.push_san(move)
@@ -36,14 +38,16 @@ class Player1(Player):
                 self.__first_move_timestamp = int(time.time())
         else:
             print("Error: ****It's Blacks Turn (Player2)***")
-        return self.get_board()
+
+        return self.__current_board
+
 
     def undo_last_move(self):
         self.__current_board.pop()
         return self.__current_board
 
     def is_turn(self):
-        return self.__current_board.turn == chess.WHITE
+        return self.__current_board.turn == True
 
 
     def get_game_time(self):
@@ -66,7 +70,7 @@ class Player2(Player):
         return self.__current_board
 
     def make_move(self, move):
-        if self.__current_board.turn == chess.BLACK:
+        if self.__current_board.turn == False:
             if self.__first_move_timestamp is not None:
                 try:
                     self.__current_board.push_san(move)
@@ -84,7 +88,7 @@ class Player2(Player):
         return self.__current_board
 
     def is_turn(self):
-        return self.__current_board.turn == chess.BLACK
+        return self.__current_board.turn == False
 
     def get_game_time(self):
         return self.__game_time
@@ -120,14 +124,14 @@ def run_game():
     Human2 = Player2(board)
 
     app = Flask(__name__, static_url_path='')
-    @app.route('/', methods=['GET'])
+    @app.route('/')
     def index():
         global board
         ret_page = open('index.html').read()
-        return ret_page.replace('start', board.board_fen()).replace('pgn-here', board.fen())
+        return ret_page.replace('start', board.board_fen())
 
 
-    @app.route('/move', methods=['GET'])
+    @app.route('/move')
     def move():
         global board
         if not board.is_game_over():
