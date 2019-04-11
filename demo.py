@@ -35,6 +35,9 @@ class Player1(Player):
         self.__current_board.pop()
         return self.__current_board
 
+    def is_turn(self):
+        return self.__current_board.turn == True
+
 
 class Player2(Player):
     def __init__(self, board):
@@ -58,6 +61,9 @@ class Player2(Player):
     def undo_last_move(self):
         self.__current_board.pop()
         return self.__current_board
+
+    def is_turn(self):
+        return self.__current_board.turn == False
 
 def console_demo():
     global board
@@ -99,7 +105,14 @@ def run_game():
             move_san = request.args.get('move', default="")
             if move_san is not None and move_san != '':
                 try:
-                    board = Human.make_move(str(move_san))
+                    if Human.is_turn():
+                        print("White's turn to play:")
+                    else:
+                        print("Black's turn to play")
+                    if Human.is_turn():
+                        board = Human.make_move(str(move_san))
+                    else:
+                        board = Human2.make_move(str(move_san))
                     print(board)
                 except Exception:
                     traceback.print_exc()
