@@ -26,11 +26,14 @@ class Player1(Player):
         return self.__current_board
 
     def make_move(self, move):
-        if self.__current_board.turn == True:
-            try:
-                self.__current_board.push_san(move)
-            except ValueError:
-                print('Not a legal move')
+        if self.__current_board.turn == chess.WHITE:
+            if self.__first_move_timestamp is not None:
+                try:
+                    self.__current_board.push_san(move)
+                except ValueError:
+                    print('Not a legal move')
+            else:
+                self.__first_move_timestamp = int(time.time())
         else:
             print("Error: ****It's Blacks Turn (Player2)***")
         return self.get_board()
@@ -40,7 +43,7 @@ class Player1(Player):
         return self.__current_board
 
     def is_turn(self):
-        return self.__current_board.turn == True
+        return self.__current_board.turn == chess.WHITE
 
 
     def get_game_time(self):
@@ -63,11 +66,14 @@ class Player2(Player):
         return self.__current_board
 
     def make_move(self, move):
-        if self.__current_board.turn == False:
-            try:
-                self.__current_board.push_san(move)
-            except ValueError:
-                print('Not a legal move')
+        if self.__current_board.turn == chess.BLACK:
+            if self.__first_move_timestamp is not None:
+                try:
+                    self.__current_board.push_san(move)
+                except ValueError:
+                    print('Not a legal move')
+            else:
+                self.__first_move_timestamp = int(time.time())
         else:
             print("Error: ****It's White's Turn (Player1)***")
 
@@ -78,7 +84,7 @@ class Player2(Player):
         return self.__current_board
 
     def is_turn(self):
-        return self.__current_board.turn == False
+        return self.__current_board.turn == chess.BLACK
 
     def get_game_time(self):
         return self.__game_time
