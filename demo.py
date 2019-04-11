@@ -6,17 +6,21 @@
 from flask import Flask, Response, request
 import chess, chess.pgn
 import traceback
+import time
 
 class Player(object):
-    def __init__(self, board):
+    def __init__(self, board, game_time=300):
         self.__current_board = board
 
     def make_move(self, move):
         raise NotImplementedError()
 
 class Player1(Player):
-    def __init__(self, board):
+    def __init__(self, board, game_time=300):
         self.__current_board = board
+        self.__game_time = game_time
+        self.__time_left = self.__game_time
+        self.__first_move_timestamp = None
 
     def get_board(self):
         return self.__current_board
@@ -39,13 +43,24 @@ class Player1(Player):
         return self.__current_board.turn == True
 
 
+    def get_game_time(self):
+        return self.__game_time
+
+    def get_time_left(self):
+        return self.__time_left
+
+
+
+
 class Player2(Player):
-    def __init__(self, board):
+    def __init__(self, board, game_time=300):
         self.__current_board = board
+        self.__game_time = game_time
+        self.__time_left = self.__game_time
+        self.__first_move_timestamp = None
 
     def get_board(self):
         return self.__current_board
-
 
     def make_move(self, move):
         if self.__current_board.turn == False:
@@ -64,6 +79,14 @@ class Player2(Player):
 
     def is_turn(self):
         return self.__current_board.turn == False
+
+    def get_game_time(self):
+        return self.__game_time
+
+    def get_time_left(self):
+        return self.__time_left
+
+
 
 def console_demo():
     global board
