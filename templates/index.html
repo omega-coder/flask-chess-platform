@@ -16,7 +16,7 @@
 
     <script type='text/javascript'>
     var board = ChessBoard('board', {
-    position: '{{ fen }}',
+        position: '{{ fen }}',
         showNotation: true,
         draggable: true,
         onDrop: onDrop
@@ -28,15 +28,15 @@
   var move = piece.includes("P") ? source + target : pn  + source.substring(0, 1) + target;
   move = piece.includes("P") && target.includes("8") ? target.substring(0, 1) + "8Q" : move; // pawn promotion
 
-  $.get('/move', {'move': move}, function(r) {
-    if (r.includes("game over")) {
-      document.querySelector("p").innerText = "game over";
-    } else {
-      document.querySelector("p").innerText = "";
-      board.position(r);
-    }
-  });
-}
+  $.get('/move', {'move': move}, function(data) {
+    console.log(data);
+    //var json_data = $.parseJSON(data);
+    //console.log(data);
+    //console.log(json_data.pgn);
+      document.querySelector("#pgn").innerText = data.pgn;
+      board.position(data.fen);
+    });
+  };
 
     </script>
 </body>
