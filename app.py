@@ -41,6 +41,10 @@ class Player1(Player):
 
         return self.__current_board
 
+    def reset(self):
+        self.__current_board = None
+        self.__time_left = self.__game_time
+        self.__first_move_timestamp = None
 
     def undo_last_move(self):
         self.__current_board.pop()
@@ -95,6 +99,11 @@ class Player2(Player):
 
     def get_time_left(self):
         return self.__time_left
+
+    def reset(self):
+        self.__current_board = None
+        self.__time_left = self.__game_time
+        self.__first_move_timestamp = None
 
 
 
