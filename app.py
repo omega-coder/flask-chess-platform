@@ -109,6 +109,27 @@ class Player2(Player):
 
 
 
+def board_to_game(board):
+    game = chess.pgn.Game()
+
+    # undo all moves
+    switchyard = collections.deque()
+    while board.move_stack:
+        switchyard.append(board.pop())
+
+    game.setup(board)
+    node = game
+
+    # Replay all moves
+    while switchyard:
+        move = switchyard.pop()
+        node = node.add_variation(move)
+        board.push(move)
+
+    game.headers["Result"] = board.result()
+    return game
+
+
 def console_demo():
     global board
     board = chess.Board()
@@ -138,7 +159,7 @@ def run_game():
     @app.route('/')
     def index():
         global board
-        return render_template('index.html', fen=board.board_fen())
+        return render_template('index.html', fen=board.board_fen(), pgn=str(board_to_game(board).mainline_moves()))
         #ret_page = open('index.html').read()
         #return ret_page.replace('start', board.board_fen())
 
