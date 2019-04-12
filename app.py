@@ -3,7 +3,7 @@
 
 # coding : utf-8
 
-from flask import Flask, Response, request
+from flask import Flask, Response, request, render_template
 import chess, chess.pgn
 import traceback
 import time
@@ -33,12 +33,11 @@ class Player1(Player):
     def make_move(self, move):
         if self.__current_board.turn == True:
             if self.__first_move_timestamp is not None:
-                try:
-                    self.__current_board.push_san(move)
-                except ValueError:
-                    print('Not a legal move')
-            else:
                 self.__first_move_timestamp = int(time.time())
+            try:
+                self.__current_board.push_san(move)
+            except ValueError:
+                print('Not a legal move')
         else:
             print("Error: ****It's Blacks Turn (Player2)***")
 
@@ -80,12 +79,11 @@ class Player2(Player):
     def make_move(self, move):
         if self.__current_board.turn == False:
             if self.__first_move_timestamp is not None:
-                try:
-                    self.__current_board.push_san(move)
-                except ValueError:
-                    print('Not a legal move')
-            else:
                 self.__first_move_timestamp = int(time.time())
+            try:
+                self.__current_board.push_san(move)
+            except ValueError:
+                print('Not a legal move')
         else:
             print("Error: ****It's White's Turn (Player1)***")
 
@@ -140,8 +138,9 @@ def run_game():
     @app.route('/')
     def index():
         global board
-        ret_page = open('index.html').read()
-        return ret_page.replace('start', board.board_fen())
+        return render_template('index.html', fen=board.board_fen())
+        #ret_page = open('index.html').read()
+        #return ret_page.replace('start', board.board_fen())
 
 
     @app.route('/move')
@@ -174,6 +173,18 @@ def run_game():
                 )
                 return response
             return index()
+
+    @app.route("/reset", methods=["GET"])
+    def reset():
+        global board
+        Human.reset()
+        Human2.reset()
+        board = chess.Board()
+        Human.set_board(board)
+        Human2.set_board(board)
+        return render_template("index.html", fen=board.board_fen())
+
+
 
     app.run(host='0.0.0.0', debug=True)
 
