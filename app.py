@@ -8,7 +8,7 @@ import chess, chess.pgn
 import traceback
 import time
 import collections
-
+import json
 
 class Player(object):
     def __init__(self, board, game_time=300):
@@ -182,9 +182,12 @@ def run_game():
                     print(board)
                 except Exception:
                     traceback.print_exc()
+                resp = {'fen': board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
+
                 response = app.response_class(
-                    response=board.board_fen(),
-                    status=200
+                    response=json.dumps(resp),
+                    status=200,
+                    mimetype='application/json'
                 )
                 return response
             else:
@@ -203,7 +206,7 @@ def run_game():
         board = chess.Board()
         Human.set_board(board)
         Human2.set_board(board)
-        return render_template("index.html", fen=board.board_fen())
+        return render_template("index.html", fen=board.board_fen(), pgn=str(board_to_game(board).mainline_moves()))
 
 
 
