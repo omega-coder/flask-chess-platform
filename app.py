@@ -7,7 +7,7 @@ from flask import Flask, Response, request, render_template
 import chess, chess.pgn
 import traceback
 import time
-
+import collections
 
 
 class Player(object):
