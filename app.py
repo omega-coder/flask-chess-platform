@@ -27,6 +27,9 @@ class Player1(Player):
     def get_board(self):
         return self.__current_board
 
+    def set_board(self, board):
+        self.__current_board = board
+
     def make_move(self, move):
         if self.__current_board.turn == True:
             if self.__first_move_timestamp is not None:
@@ -40,11 +43,6 @@ class Player1(Player):
             print("Error: ****It's Blacks Turn (Player2)***")
 
         return self.__current_board
-
-    def reset(self):
-        self.__current_board = None
-        self.__time_left = self.__game_time
-        self.__first_move_timestamp = None
 
     def undo_last_move(self):
         self.__current_board.pop()
@@ -60,7 +58,10 @@ class Player1(Player):
     def get_time_left(self):
         return self.__time_left
 
-
+    def reset(self):
+        self.__current_board = None
+        self.__time_left = self.__game_time
+        self.__first_move_timestamp = None
 
 
 class Player2(Player):
@@ -72,6 +73,9 @@ class Player2(Player):
 
     def get_board(self):
         return self.__current_board
+
+    def set_board(self, board):
+        self.__current_board = board
 
     def make_move(self, move):
         if self.__current_board.turn == False:
