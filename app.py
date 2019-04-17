@@ -5,6 +5,7 @@
 
 from flask import Flask, Response, request, render_template, url_for
 import chess, chess.pgn
+import chess.engine
 import traceback
 import time
 import collections
@@ -71,7 +72,7 @@ class Player2(Player):
         self.__game_time = game_time
         self.__time_left = self.__game_time
         self.__first_move_timestamp = None
-
+        self.__engine = False
     def get_board(self):
         return self.__current_board
 
@@ -109,6 +110,28 @@ class Player2(Player):
         self.__time_left = self.__game_time
         self.__first_move_timestamp = None
 
+
+    def init_stockfish(self):
+        self.__is_engine = True
+        try:
+            self.__engine = chess.engine.SimpleEngine.popen_uci("/usr/bin/stockfish_10_x64")
+            return True
+        except Exception:
+            return False
+
+
+    def is_engine(self):
+        return self.__engine
+
+
+    def engine_move(self):
+        result = self.__engine.play(self.__current_board, chess.engine.Limit(time=0.100))
+        move = result.move
+        try:
+            self.__current_board.push(move)
+        except Exception:
+            print("Cant push move")
+        return self.__current_board
 
 
 def board_to_game(board):
@@ -157,7 +180,8 @@ def run_game():
     undo_moves_stack = []
     board = chess.Board()
     Human  = Player1(board)
-    Human2 = Player2(board)
+    engine = Player2(board)
+    engine.init_stockfish()
 
     app = Flask(__name__, static_url_path='')
     @app.route('/', methods=['GET'])
@@ -181,9 +205,8 @@ def run_game():
                     if Human.is_turn():
                         board = Human.make_move(str(move_san))
                         undo_moves_stack = [] #make undo moves stack empty if any move is done.
-                    else:
-                        board = Human2.make_move(str(move_san))
-                        undo_moves_stack = [] #make undo moves stack empty if any move is done.
+                        if engine.is_turn():
+                            board = engine.engine_move()
                     print(board)
                 except Exception:
                     traceback.print_exc()
@@ -207,10 +230,10 @@ def run_game():
     def reset():
         global board
         Human.reset()
-        Human2.reset()
+        engine.reset()
         board = chess.Board()
         Human.set_board(board)
-        Human2.set_board(board)
+        engine.set_board(board)
 
         resp = {"fen": board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
         response = app.response_class(
@@ -260,7 +283,7 @@ def run_game():
         return response
 
 
-    http_server = WSGIServer(('', 1337), app)
+    http_server = WSGIServer(('0.0.0.0', 1337), app)
     http_server.serve_forever()
 
     #app.run(host='127.0.0.1', debug=True)
