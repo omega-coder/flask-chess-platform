@@ -158,13 +158,13 @@ def run_game():
     Human2 = Player2(board)
 
     app = Flask(__name__, static_url_path='/static')
-    @app.route('/')
+    @app.route('/', methods=['GET'])
     def index():
         global board
         return render_template('index.html', fen=board.board_fen(), pgn=str(board_to_game(board).mainline_moves()))
 
 
-    @app.route('/move')
+    @app.route('/move', methods=['GET'])
     def move():
         global board
         if not board.is_game_over():
