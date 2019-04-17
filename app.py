@@ -226,15 +226,12 @@ def run_game():
     def undo():
         global board
         global undo_moves_stack
-        canundo = True
         try:
             undo_moves_stack.append(board.pop())
         except IndexError:
-            canundo = False
+            print("fuck")
 
-        resp = {"fen": board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves()), 'canundo': 'true'}
-        if canundo == False:
-            resp['canundo'] = 'false'
+        resp = {'fen': board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
         response = app.response_class(
             response=json.dumps(resp),
             status=200,
@@ -252,9 +249,7 @@ def run_game():
         else:
             pass
 
-        resp = {'fen': board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves()), 'canredo': 'true'}
-        if len(undo_moves_stack) == 0:
-            resp['canredo'] = 'false'
+        resp = {'fen': board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
 
         response = app.response_class(
             response=json.dumps(resp),
