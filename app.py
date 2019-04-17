@@ -153,7 +153,8 @@ def console_demo():
 
 def run_game():
     global board
-    global undo_moves_stack = []
+    global undo_moves_stack
+    undo_moves_stack = []
     board = chess.Board()
     Human  = Player1(board)
     Human2 = Player2(board)
@@ -247,7 +248,7 @@ def run_game():
         global board
         global undo_moves_stack
         if len(undo_moves_stack) != 0:
-            board.push(undo_last_move.pop())
+            board.push(undo_moves_stack.pop())
         else:
             pass
 
@@ -258,7 +259,7 @@ def run_game():
         response = app.response_class(
             response=json.dumps(resp),
             status=200,
-            mimeype='application/json'
+            mimetype='application/json'
         )
 
         return response
