@@ -159,7 +159,7 @@ def run_game():
     Human  = Player1(board)
     Human2 = Player2(board)
 
-    app = Flask(__name__, root_path='./', static_url_path="")
+    app = Flask(__name__, static_url_path='')
     @app.route('/', methods=['GET'])
     def index():
         global board

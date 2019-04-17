@@ -4,18 +4,11 @@
     <meta charset="UTF-8">
     <title>Chessboard JS</title>
     <!-- CSS file -->
-    <link rel="stylesheet" href="static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/chessboard-0.3.0.min.css">
-    <link rel="stylesheet" href="static/css/fontawesome.css">
-    <style>
-        .card {
-            border-radius: 0 !important;
-        }
-        .card-body {
-            padding: 0 !important;
-            padding-left: 2px !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-0.3.0.min.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')}}">
+    
 
 </head>
 <body>
@@ -65,9 +58,9 @@
         </div>
     </div>
 
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/chessboard-0.3.0.min.js" ></script>
-    <script src="static/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/chessboard-0.3.0.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
     <script type='text/javascript'>
     var board = ChessBoard('board', {
         position: '{{ fen }}',
