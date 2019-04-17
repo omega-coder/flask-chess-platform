@@ -215,7 +215,24 @@ def run_game():
         )
 
         return response
-        
+
+
+    @app.route("/undo", methods=["GET"])
+    def undo():
+        global board
+        try:
+            board.pop()
+        except Exception:
+            pass
+
+        resp = {"fen": board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
+        response = app.response_class(
+            response=json.dumps(resp),
+            status=200,
+            mimetype='application/json'
+        )
+        return response
+
 
     http_server = WSGIServer(('', 1337), app)
     http_server.serve_forever()
