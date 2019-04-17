@@ -153,11 +153,12 @@ def console_demo():
 
 def run_game():
     global board
+    global undo_moves_stack = []
     board = chess.Board()
     Human  = Player1(board)
     Human2 = Player2(board)
 
-    app = Flask(__name__, static_url_path='/static')
+    app = Flask(__name__, root_path='./', static_url_path="")
     @app.route('/', methods=['GET'])
     def index():
         global board
@@ -220,17 +221,43 @@ def run_game():
     @app.route("/undo", methods=["GET"])
     def undo():
         global board
+        global undo_moves_stack
+        canundo = True
         try:
-            board.pop()
-        except Exception:
-            pass
+            undo_moves_stack.append(board.pop())
+        except IndexError:
+            canundo = False
 
-        resp = {"fen": board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
+        resp = {"fen": board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves()), 'canundo': 'true'}
+        if canundo == False:
+            resp['canundo'] = 'false'
         response = app.response_class(
             response=json.dumps(resp),
             status=200,
             mimetype='application/json'
         )
+        return response
+
+
+    @app.route("/redo", methods=["GET"])
+    def redo():
+        global board
+        global undo_moves_stack
+        if len(undo_moves_stack) != 0:
+            board.push(undo_last_move.pop())
+        else:
+            pass
+
+        resp = {'fen': board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves()), 'canredo': 'true'}
+        if len(undo_moves_stack) == 0:
+            resp['canredo'] = 'false'
+
+        response = app.response_class(
+            response=json.dumps(resp),
+            status=200,
+            mimeype='application/json'
+        )
+
         return response
 
 
