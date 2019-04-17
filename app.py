@@ -168,8 +168,9 @@ def run_game():
     @app.route('/move', methods=['GET'])
     def move():
         global board
+        global undo_moves_stack
         if not board.is_game_over():
-            move_san = request.args.get('move', default="")
+            move_san = request.args.get('move', default='')
             if move_san is not None and move_san != '':
                 try:
                     if Human.is_turn():
@@ -178,8 +179,10 @@ def run_game():
                         print("Black's turn to play")
                     if Human.is_turn():
                         board = Human.make_move(str(move_san))
+                        undo_moves_stack = [] #make undo moves stack empty if any move is done.
                     else:
                         board = Human2.make_move(str(move_san))
+                        undo_moves_stack = [] #make undo moves stack empty if any move is done.
                     print(board)
                 except Exception:
                     traceback.print_exc()
