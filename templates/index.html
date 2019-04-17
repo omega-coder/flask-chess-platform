@@ -1,112 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Chessboard JS</title>
     <!-- CSS file -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-0.3.0.min.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome.css')}}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css')}}">
-    
-
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/chessboard-0.3.0.min.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fontawesome.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/app.css')}}"
+    />
+  </head>
+  <body>
     <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarsExample10"
+          aria-controls="navbarsExample10"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+        <div
+          class="collapse navbar-collapse justify-content-md-center"
+          id="navbarsExample10"
+        >
           <ul class="navbar-nav">
             <li class="nav-item active">
-              <a class="nav-link" href="#">ChessboardJS with Flask<span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="#"
+                >ChessboardJS with Flask<span class="sr-only"
+                  >(current)</span
+                ></a
+              >
             </li>
           </ul>
         </div>
       </nav>
 
-        <div class="row">
-            <div class="col-md-4">
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+          <div class="card text-white bg-dark mb-3" style="width: 69%;">
+            <div class="card-header">
+              <span class="text-muted">Player 2</span>
+              <span style="float: right;">Time here</span>
             </div>
-            <div class="col-md-6">
-			<div class="card text-white bg-dark mb-3" style='width: 69%;'>
-                <div class="card-header"><span class="text-muted">Player 2</span>
-                <span style='float: right;'>Time here</span>
-                </div>
-				<div class="card-body">
-				<div id="board"></div>
-                <div class="card-footer">
-                    <span class="text-muted">Player 1 </span> 
-                    <i class="fas fa-undo-alt fa-lg" id="reset" disabled></i>
-                    <i class='fas fa-step-backward fa-lg' id="undo"></i>&nbsp;&nbsp;
-                    <i class="fas fa-step-forward fa-lg" id="redo"></i>&nbsp;&nbsp;
-                </div>
-			</div>
-			</div>
+            <div class="card-body">
+              <div id="board"></div>
+              <div class="card-footer">
+                <span class="text-muted">Player 1 </span>
+                <i class="fas fa-undo-alt fa-lg" id="reset" disabled></i>
+                <i class="fas fa-step-backward fa-lg" id="undo"></i>&nbsp;&nbsp;
+                <i class="fas fa-step-forward fa-lg" id="redo"></i>&nbsp;&nbsp;
+              </div>
             </div>
-            <div class="col-md-2">
-                <p id="pgn">{{ pgn }}</p>
-            </div>
+          </div>
         </div>
+        <div class="col-md-2">
+          <p id="pgn">{{ pgn }}</p>
+        </div>
+      </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/chessboard-0.3.0.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
-    <script type='text/javascript'>
-    var board = ChessBoard('board', {
+    <script src="{{ url_for('static', filename='js/app.js')}}"></script>
+
+    <script>
+      var board = ChessBoard('board', {
         position: '{{ fen }}',
         showNotation: true,
         draggable: true,
-        onDrop: onDrop
-    });
-
-  function onDrop(source, target, piece) {
-  var pn = piece.includes('b') ? piece.toUpperCase().substring(1, 2) : piece.substring(1, 2);
-  pn = piece.includes('P') ? '' : pn;
-  var move = piece.includes("P") ? source + target : pn  + source.substring(0, 1) + target;
-  move = piece.includes("P") && target.includes("8") ? target.substring(0, 1) + "8Q" : move; // pawn promotion
-
-  $.get('/move', {'move': move}, function(data) {
-    console.log(data);
-      document.querySelector("#pgn").innerText = data.pgn;
-      board.position(data.fen);
-    });
-  };
-
-    $("#reset").click(function() {
-        $.get('/reset', function(data) {
-            board.position(data.fen);
-            document.querySelector("#pgn").innerText = data.pgn;
-        });
-    }); 
-
-    $("#undo").click(function() {
-        if (!$(this).hasClass('text-muted')) {
-        $.get("/undo", function(data) {
-            board.position(data.fen);
-            document.querySelector('#pgn').innerText = data.pgn;
-        });
-        } else {
-            //
-        }   
-    });
-
-    $("#redo").click(function() {
-        if (!$(this).hasClass('text-muted')) {
-            $.get('/redo', function(data) {
-                board.position(data.fen);
-                document.querySelector("#pgn").innerText = data.pgn;
-            });
-        } else {
-            //
-        }
-    }); 
-
-</script>
-</body>
+        onDrop: onDrop,
+      });
+    </script>
+  </body>
 </html>
-
-
