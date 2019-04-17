@@ -84,11 +84,26 @@
     }); 
 
     $("#undo").click(function() {
+        if (!$(this).hasClass('text-muted')) {
         $.get("/undo", function(data) {
             board.position(data.fen);
             document.querySelector('#pgn').innerText = data.pgn;
         });
+        } else {
+            //
+        }   
     });
+
+    $("#redo").click(function() {
+        if (!$(this).hasClass('text-muted')) {
+            $.get('/redo', function(data) {
+                board.position(data.fen);
+                document.querySelector("#pgn").innerText = data.pgn;
+            });
+        } else {
+            //
+        }
+    }); 
 
 </script>
 </body>
