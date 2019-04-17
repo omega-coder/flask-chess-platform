@@ -23,17 +23,6 @@
             <li class="nav-item active">
               <a class="nav-link" href="#">ChessboardJS with Flask<span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);" id="reset">Reset</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="https://omega-coder.me" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown10">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
           </ul>
         </div>
       </nav>
@@ -43,11 +32,16 @@
             </div>
             <div class="col-md-6">
 			<div class="card text-white bg-dark mb-3" style='width: 69%;'>
-				<div class="card-header">Player2</div>
+                <div class="card-header"><span class="text-muted">Player 2</span>
+                <span style='float: right;'>Time here</span>
+                </div>
 				<div class="card-body">
 				<div id="board"></div>
                 <div class="card-footer">
-                    <span class="text-muted">Player 1 </span> <i class='fas fa-step-backward' id="undo"></i>
+                    <span class="text-muted">Player 1 </span> 
+                    <i class="fas fa-undo-alt fa-lg" id="reset" disabled></i>
+                    <i class='fas fa-step-backward fa-lg' id="undo"></i>&nbsp;&nbsp;
+                    <i class="fas fa-step-forward fa-lg" id="redo"></i>&nbsp;&nbsp;
                 </div>
 			</div>
 			</div>

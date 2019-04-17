@@ -10,3 +10,9 @@
     padding: 0 !important;
 }
 
+/* Main app styles*/
+
+#reset, #undo, #redo {
+    cursor: pointer;
+}
+    
