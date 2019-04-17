@@ -4,16 +4,64 @@
     <meta charset="UTF-8">
     <title>Chessboard JS</title>
     <!-- CSS file -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/css/chessboard-0.3.0.min.css">
-    <!-- Javascript files -->
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/chessboard-0.3.0.min.js"></script>  
+    <style>
+        .card-body {
+            padding: 0 !important;
+            padding-left: 2px !important;
+        }
+    </style>
+
 </head>
 <body>
-    <div id="board" style='width: 400px'></div>
 
-    <p id="pgn">{{ pgn }}</p>
 
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample10">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">ChessboardJS with Flask<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('reset') }}">Reset</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="https://omega-coder.me" id="dropdown10" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+              <div class="dropdown-menu" aria-labelledby="dropdown10">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+		<div class="container">
+        <div class="row">
+            <div class="col-md-8">
+			<div class="card text-white bg-dark mb-3" style="width: 70%;">
+				<div class="card-header">Game Board</div>
+				<div class="card-body">
+				<div id="board"></div>			  
+			</div>
+			</div>	
+            </div>
+            <div class="col-md-4">
+                <p id="pgn">{{ pgn }}</p>    
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/chessboard-0.3.0.min.js" ></script>
+    <script src="static/js/bootstrap.min.js"></script>
     <script type='text/javascript'>
     var board = ChessBoard('board', {
         position: '{{ fen }}',
@@ -30,15 +78,11 @@
 
   $.get('/move', {'move': move}, function(data) {
     console.log(data);
-    //var json_data = $.parseJSON(data);
-    //console.log(data);
-    //console.log(json_data.pgn);
       document.querySelector("#pgn").innerText = data.pgn;
       board.position(data.fen);
     });
   };
-
-    </script>
+</script>
 </body>
 </html>
 

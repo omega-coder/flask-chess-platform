@@ -160,8 +160,6 @@ def run_game():
     def index():
         global board
         return render_template('index.html', fen=board.board_fen(), pgn=str(board_to_game(board).mainline_moves()))
-        #ret_page = open('index.html').read()
-        #return ret_page.replace('start', board.board_fen())
 
 
     @app.route('/move')
