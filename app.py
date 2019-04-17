@@ -9,6 +9,8 @@ import traceback
 import time
 import collections
 import json
+from gevent.pywsgi import WSGIServer
+
 
 class Player(object):
     def __init__(self, board, game_time=300):
@@ -155,7 +157,7 @@ def run_game():
     Human  = Player1(board)
     Human2 = Player2(board)
 
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/static')
     @app.route('/')
     def index():
         global board
@@ -208,7 +210,11 @@ def run_game():
 
 
 
-    app.run(host='0.0.0.0', debug=True)
+    http_server = WSGIServer(('', 1337), app)
+    http_server.serve_forever()
+
+    #app.run(host='127.0.0.1', debug=True)
+
 
 if __name__ == "__main__":
     #console_demo()
