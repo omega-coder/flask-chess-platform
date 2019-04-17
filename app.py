@@ -206,9 +206,16 @@ def run_game():
         board = chess.Board()
         Human.set_board(board)
         Human2.set_board(board)
-        return render_template("index.html", fen=board.board_fen(), pgn=str(board_to_game(board).mainline_moves()))
 
+        resp = {"fen": board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
+        response = app.response_class(
+            response=json.dumps(resp),
+            status=200,
+            mimetype='application/json'
+        )
 
+        return response
+        
 
     http_server = WSGIServer(('', 1337), app)
     http_server.serve_forever()
