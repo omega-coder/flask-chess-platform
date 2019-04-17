@@ -1,0 +1,12 @@
+
+
+/* Overwrite .card class properties */
+
+.card {
+    border-radius: 0 !important;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
