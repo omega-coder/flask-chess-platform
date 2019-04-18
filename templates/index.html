@@ -22,79 +22,77 @@
     />
   </head>
   <body>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarsExample10"
-            aria-controls="navbarsExample10"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <div
-            class="collapse navbar-collapse justify-content-md-center"
-            id="navbarsExample10"
-          >
-            <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="#"
-                  >ChessboardJS with Flask<span class="sr-only"
-                    >(current)</span
-                  ></a
-                >
-              </li>
-            </ul>
-          </div>
-        </nav>
-  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarsExample10"
+        aria-controls="navbarsExample10"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div
+        class="collapse navbar-collapse justify-content-md-center"
+        id="navbarsExample10"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#"
+              >ChessboardJS with Flask<span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+
     <div class="container-fluid">
-      
       <div class="row">
         <div class="col-md-12">
-            <div class="card-group">
-                <div class="card text-white bg-dark">
-                    <div class="card-header">
-                      <span class="text-muted">Player 2</span>
-                      <span style="float: right;">Time</span>
-                    </div>
-                    <div class="card-body">
-                      <div id="board" style='width: 69%;'></div>
-                      <div class="card-footer">
-                        <span class="text-muted">Player 1 </span>
-                        <i class="fas fa-undo-alt fa-lg"      id="reset"></i>
-                        <i class="fas fa-step-backward fa-lg"  id="undo"></i>&nbsp;&nbsp;
-                        <i class="fas fa-step-forward fa-lg"   id="redo"></i>&nbsp;&nbsp;
-                      </div>
-                    </div>
-                </div>
-                <div class="card text-white bg-dark">
-                    <div class="card-header">
-                      <span>Moves</span>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped table-dark table-hover">
-                            <thead>
-                              <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">White</th>
-                                <th scope="col">Black</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                          </table>
-                      <p id="pgn">{{ pgn }}</p>
-                      <div class="card-footer">
-                        <span class="text-muted">Analysis</span>
-                      </div>
-                    </div>
+          <div class="card-group">
+            <div class="card text-white bg-dark">
+              <div class="card-header">
+                <span class="text-muted">Player 2</span>
+                <span style="float: right;">Time</span>
+              </div>
+              <div class="card-body">
+                <div id="board" style="width: 69%;"></div>
+                <div class="card-footer">
+                  <span class="text-muted">Player 1 </span>
+                  <i class="fas fa-undo-alt fa-lg" id="reset"></i>
+                  <i class="fas fa-step-backward fa-lg" id="undo"></i
+                  >&nbsp;&nbsp;
+                  <i class="fas fa-step-forward fa-lg" id="redo"></i
+                  >&nbsp;&nbsp;
                 </div>
               </div>
+            </div>
+            <div class="card text-white bg-dark">
+              <div class="card-header">
+                <span>Moves</span>
+              </div>
+              <div class="card-body">
+                <table class="table table-striped table-sm table-dark table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">White</th>
+                      <th scope="col">Black</th>
+                    </tr>
+                  </thead>
+                  <tbody id="pgn-moves">
+                    <!-- PGN Table data -->
+                  </tbody>
+                </table>
+                <div class="card-footer">
+                  <span class="text-muted">Analysis</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
