@@ -14,5 +14,6 @@
 
 #reset, #undo, #redo {
     cursor: pointer;
+    font-size: 120%;
 }
     
