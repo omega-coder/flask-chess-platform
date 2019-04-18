@@ -28,4 +28,17 @@
 tbody#pgn-moves {
     font-family: 'chesspirate', sans-serif;
 }
-    
+
+
+/* Overflow moves tables */
+.card-body#game-moves {
+    overflow-y: scroll;
+    max-height: 460px;
+}
+
+tbody tr td:hover {
+    background-color: #20a4f3;
+    cursor: pointer;
+}
+
+
