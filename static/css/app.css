@@ -1,5 +1,11 @@
 
 
+@font-face {
+    font-family: 'chesspirate';
+    src: url('../webfonts/ChessSansPiratf.woff');
+}
+
+
 /* Overwrite .card class properties */
 
 .card {
@@ -15,5 +21,11 @@
 #reset, #undo, #redo {
     cursor: pointer;
     font-size: 120%;
+}
+
+/* applying chess font to moves in table */
+
+tbody#pgn-moves {
+    font-family: 'chesspirate', sans-serif;
 }
     
