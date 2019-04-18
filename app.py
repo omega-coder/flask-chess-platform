@@ -210,8 +210,9 @@ def run_game():
                     print(board)
                 except Exception:
                     traceback.print_exc()
-                resp = {'fen': board.board_fen(), 'pgn': str(board_to_game(board).mainline_moves())}
-
+                game_moves_san = [move_uci.san() for move_uci in board_to_game(board).mainline()]
+                print(game_moves_san)
+                resp = {'fen': board.board_fen(), 'moves': game_moves_san}
                 response = app.response_class(
                     response=json.dumps(resp),
                     status=200,
