@@ -75,7 +75,9 @@
                 <span>Moves</span>
               </div>
               <div class="card-body" id="game-moves">
-                <table class="table table-striped table-sm table-dark table-hover">
+                <table
+                  class="table table-striped table-sm table-dark table-hover"
+                >
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -100,15 +102,17 @@
     <script src="{{ url_for('static', filename='js/jquery.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/chessboard-0.3.0.min.js')}}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='js/app.js')}}"></script>
 
+    <script src="{{ url_for('static', filename='js/app.js')}}"></script>
     <script>
-      var board = ChessBoard('board', {
+      var cfg = {
         position: '{{ fen }}',
         showNotation: true,
         draggable: true,
-        onDrop: onDrop,
-      });
+        onDragStart: onDragStart,
+        onDrop: onDrop
+      };
+      var board = ChessBoard('board', cfg);
     </script>
   </body>
 </html>
