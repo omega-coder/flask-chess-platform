@@ -212,20 +212,27 @@ def run_game():
                     traceback.print_exc()
                 game_moves_san = [move_uci.san() for move_uci in board_to_game(board).mainline()]
                 print(game_moves_san)
-                resp = {'fen': board.board_fen(), 'moves': game_moves_san}
+                if board.is_game_over():
+                    resp = {'fen': board.board_fen(), 'moves': game_moves_san, 'game_over': 'true'}
+                else:
+                    resp = {'fen': board.board_fen(), 'moves': game_moves_san, 'game_over': 'false'}
                 response = app.response_class(
                     response=json.dumps(resp),
                     status=200,
                     mimetype='application/json'
                 )
                 return response
-            else:
-                response = app.response_class(
-                    response="game over",
-                    status=200
-                )
-                return response
-            return index()
+        else:
+            game_moves_san = [move_uci.san() for move_uci in board_to_game(board).mainline()]
+            print(game_moves_san)
+            resp = {'fen': board.board_fen(), 'moves': game_moves_san, 'game_over': 'true'}
+            response = app.response_class(
+                response=json.dumps(resp),
+                status=200,
+                mimetype='application/json'
+            )
+            return response
+        return index()
 
     @app.route("/reset", methods=["GET"])
     def reset():
