@@ -39,7 +39,7 @@ python3 -m pip install -r requirements.txt
 python3 app.py
 ```
 
-5. Go to https://127.0.0.1:1337
+5. Go to http://127.0.0.1:1337
 
 # TODOS
 1. Add game time to fontend and synchronize with backend time
