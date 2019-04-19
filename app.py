@@ -114,7 +114,7 @@ class Player2(Player):
     def init_stockfish(self):
         self.__is_engine = True
         try:
-            self.__engine = chess.engine.SimpleEngine.popen_uci("/usr/bin/stockfish_10_x64")
+            self.__engine = chess.engine.SimpleEngine.popen_uci("/usr/bin/stockfish")
             return True
         except Exception:
             return False
