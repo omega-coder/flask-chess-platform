@@ -41,4 +41,6 @@ tbody tr td:hover {
     cursor: pointer;
 }
 
-
+img[class^="piece"] {
+    cursor: pointer;
+}
