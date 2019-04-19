@@ -27,9 +27,9 @@ python3 -m pip install -r requirements.txt
 ```
 
 3. Install stockfish engine in your system.
-        1. download engine from [stockfish Download](https://stockfishchess.org/download/).
-        2. For linux users, extract and move engine binary to `/usr/bin`.
-        3. change the engine path in Player2 class
+        1. download engine from [stockfish Download](https://stockfishchess.org/download/).  
+        2. For linux users, extract and move engine binary to `/usr/bin`.  
+        3. change the engine path in Player2 class  
               ```python
               self.__engine = chess.engine.SimpleEngine.popen_uci("/usr/bin/stockfish")
               ```
