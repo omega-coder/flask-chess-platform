@@ -44,3 +44,7 @@ tbody tr td:hover {
 img[class^="piece"] {
     cursor: pointer;
 }
+
+.game-over {
+    color: #ea1744;
+}

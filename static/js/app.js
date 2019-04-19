@@ -16,31 +16,35 @@ function onDrop(source, target, piece, orientation) {
     //document.querySelector('tbody#pgn-moves');
     //document.querySelector('#pgn').innerText = data.pgn;
     moves = data.moves;
-    var tbody = document.getElementById('pgn-moves');
-    tbody.innerHTML = '';
-    i = 0;
-    var m_len = moves.length;
-    var row_number = 1;
-    while (i < m_len) {
-      var tr = document.createElement('tr');
-      var th = document.createElement('th');
-      th.setAttribute('scope', row_number.toString());
-      th.innerText = row_number.toString();
-      tr.appendChild(th);
-      var td = document.createElement('td');
-      td.innerText = moves[i].toString();
-      tr.appendChild(td);
-      if (m_len % 2 != 1) {
+    if (data.game_over !== 'true') {
+      var tbody = document.getElementById('pgn-moves');
+      tbody.innerHTML = '';
+      i = 0;
+      var m_len = moves.length;
+      var row_number = 1;
+      while (i < m_len) {
+        var tr = document.createElement('tr');
+        var th = document.createElement('th');
+        th.setAttribute('scope', row_number.toString());
+        th.innerText = row_number.toString();
+        tr.appendChild(th);
         var td = document.createElement('td');
-        td.innerText = moves[i + 1].toString();
+        td.innerText = moves[i].toString();
         tr.appendChild(td);
+        if (m_len % 2 != 1) {
+          var td = document.createElement('td');
+          td.innerText = moves[i + 1].toString();
+          tr.appendChild(td);
+        }
+        i += 2;
+        row_number++;
+        tbody.appendChild(tr);
       }
-      i += 2;
-      row_number++;
-
-      tbody.appendChild(tr);
+      board.position(data.fen);
+      $(".card-body#game-moves").scrollTop($(".card-body#game-moves")[0].scrollHeight);
+    } else {
+        document.querySelectorAll(".game-over")[1].innerText = "Game lost";
     }
-    board.position(data.fen);
   });
 }
 
